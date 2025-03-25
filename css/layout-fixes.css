@@ -1,0 +1,408 @@
+/* Correções de layout para o jogo Cofre Explosivo */
+
+/* Centralização das telas */
+.screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+/* Estilos comuns para todas as divs de conteúdo */
+.loader-content,
+.countdown-content,
+.phase-transition-content,
+.explosive-booster-content,
+.menu-content,
+.instructions-content,
+.records-content,
+.start-content,
+.game-content,
+.result-content,
+.login-content {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Estilos específicos para o loader-content */
+.loader-content {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 30px 20px;
+}
+
+.loader-content .cofre-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 150px;
+    margin-bottom: -20px;
+}
+
+.loader-content .cofre-image {
+    width: 280px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: -27px;
+}
+
+/* Estilos para o menu principal e outras telas principais */
+.menu-content,
+.game-content,
+.phase-transition-content,
+.result-content {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 30px 20px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.menu-buttons {
+    margin-top: 30px;
+}
+
+.menu-content .menu-button:last-of-type,
+.game-content .menu-button:last-of-type,
+.phase-transition-content .menu-button:last-of-type,
+.result-content .menu-button:last-of-type {
+    background-color: white;
+    color: #333;
+    cursor: default;
+    pointer-events: none;
+}
+
+.menu-content .menu-button:last-of-type span:first-child,
+.game-content .menu-button:last-of-type span:first-child,
+.phase-transition-content .menu-button:last-of-type span:first-child,
+.result-content .menu-button:last-of-type span:first-child {
+    font-weight: bold;
+}
+
+.explosion-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 150px;
+    margin-bottom: 30px;
+}
+
+.explosion-image {
+    width: 230px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: -32px;
+}
+
+/* Estilos para a tela de início de jogo */
+.start-content {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 30px 20px 100px 20px;
+}
+
+.money-image-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5px;
+}
+
+.money-image {
+    width: 220px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 7px;
+    z-index: 0;
+}
+
+/* Estilos para a tela de contagem regressiva */
+.countdown-content {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    padding: 30px 20px 100px 20px;
+}
+
+.phone-image-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5px;
+}
+
+.phone-image {
+    width: 250px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: -17px;
+    z-index: 0;
+}
+
+.check-image-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5px;
+}
+
+.check-image {
+    width: 300px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: -17px;
+    z-index: 0;
+}
+
+.bau-image-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5px;
+}
+
+.bau-image {
+    width: 260px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: -10px;
+    z-index: 0;
+}
+
+/* Estilos para a tela do Booster Explosivo */
+.phase-transition-box {
+    width: 80%;
+    border: 2px solid #000;
+    border-radius: 10px;
+    padding: 8px;
+    margin: 8px auto;
+    background-color: white;
+    text-align: center;
+}
+
+.message-box {
+    padding: 5px;
+    text-align: center;
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 16px;
+}
+
+.ray-icon {
+    font-size: 24px;
+    margin-right: 5px;
+    color: #FFD700; /* Cor dourada para o raio */
+    vertical-align: middle;
+}
+
+#explosive-booster-value {
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #FF0000;
+    vertical-align: middle;
+}
+
+.button-container {
+    text-align: center;
+    margin: 5px auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.explosive-button {
+    min-width: 120px;
+    display: inline-block;
+    text-align: center;
+    margin: 0;
+}
+
+/* Estilos para a tela de apostas */
+.balance-container, 
+.bet-container {
+    width: 200px;
+    border: 2px solid #333;
+    border-radius: 10px;
+    background-color: #fff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bet-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+    width: 100%;
+}
+
+.bet-option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+#play-button {
+    margin-top: 20px;
+    padding: 10px 30px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-transform: uppercase;
+}
+
+/* Ajuste do tamanho dos círculos na interface do jogo */
+.game-circles {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 15px auto;
+    width: 100%;
+    max-width: 360px;
+}
+
+/* Diminuir o tamanho do booster e timer */
+.booster-circle,
+.timer-circle {
+    width: 70px !important; /* Reduzido de 90px */
+}
+
+/* Aumentar o tamanho do círculo do prêmio */
+.prize-circle {
+    width: 120px !important; /* Aumentado de 90px */
+}
+
+/* Ajuste do tamanho da fonte para o valor do prêmio */
+.prize-circle .circle-value {
+    font-size: 24px !important;
+}
+
+/* Ajuste do tamanho da fonte para o booster e timer */
+.booster-circle .circle-value,
+.timer-circle .circle-value {
+    font-size: 18px !important;
+    font-family: 'Chau Philomene One', sans-serif !important;
+    font-weight: bold !important;
+    line-height: 1 !important;
+}
+
+/* Garantir que o timer tenha exatamente o mesmo estilo do booster */
+#timer {
+    font-size: 18px !important;
+    font-family: 'Chau Philomene One', sans-serif !important;
+    font-weight: bold !important;
+}
+
+/* Garantir que o booster tenha exatamente o mesmo estilo do timer */
+#booster-indicator {
+    font-size: 18px !important;
+    font-family: 'Chau Philomene One', sans-serif !important;
+    font-weight: bold !important;
+}
+
+/* Ajustes específicos para a tela de instruções */
+.instructions-content {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    height: 100%;
+}
+
+.instructions-text {
+    width: 100%;
+    max-width: 360px;
+    padding: 0 10px;
+    margin: 10px 0;
+    text-align: left;
+    font-family: sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.instructions-text p {
+    margin: 5px 0;
+}
+
+.instructions-buttons {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Garantir que o botão de voltar seja consistente com os outros botões */
+#back-from-instructions-button {
+    min-width: 120px;
+    text-transform: uppercase;
+}

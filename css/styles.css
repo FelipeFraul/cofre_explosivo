@@ -1,0 +1,981 @@
+/* Barra de progresso com animação */
+.progress-loader {
+    width: 100%;
+    height: 4.8px;
+    display: inline-block;
+    position: relative;
+    background: rgba(223, 213, 213, 0.15);
+    overflow: hidden;
+    border-radius: 4px;
+    margin: 20px 0;
+}
+
+.progress-loader::after {
+    box-sizing: border-box;
+    width: 0;
+    height: 4.8px;
+    background: #FFF;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: animFw 10s linear infinite;
+}
+
+.loading-progress {
+    height: 100%;
+    background: #FFF;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%; /* Será atualizado via JavaScript */
+    transition: width 0.3s ease;
+    z-index: 1;
+}
+
+@keyframes animFw {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 100%;
+    }
+}
+
+body {
+    background-color: #121212;
+    color: #ffffff;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-container {
+    width: 100%;
+    max-width: 800px;
+    height: 100%;
+    max-height: 600px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Menu principal */
+.menu-content {
+    text-align: center;
+}
+
+.menu-buttons {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.menu-button {
+    padding: 12px 30px;
+    font-size: 18px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.menu-button:hover {
+    background-color: #000000;
+}
+
+.menu-info /* Importante */{
+    padding: 12px 30px;
+    font-size: 18px;
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-family: inherit;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Tela de instruções e recordes */
+.instructions-content,
+.records-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.instructions-text {
+    margin: 0 0;
+    line-height: 1.6;
+}
+
+.instructions-text ul {
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 10px;
+}
+
+.records-list {
+    list-style-type: none;
+    margin: 20px 0;
+}
+
+.records-list li {
+    padding: 10px;
+    border-bottom: 1px solid #333;
+}
+
+/* Ícones */
+.ray-icon, .time-icon, .money-icon {
+    width: 25px;
+    height: 25px;
+    position: relative;
+    margin-right: 10px;
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.7));
+}
+
+.ray-icon {
+    filter: drop-shadow(0 0 3px rgba(255, 255, 0, 0.7));
+}
+
+.time-icon {
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 27px;
+    font-weight: bold;
+    margin-right: 16px;
+    line-height: 1;
+    position: absolute;
+    top: -20px;
+    margin-left: 150px;
+    z-index: 2;
+    filter: drop-shadow(0 0 3px rgba(255, 255, 0, 0.7));
+}
+
+.money-icon {
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 27px;
+    font-weight: bold;
+    margin-right: 16px;
+    line-height: 1;
+
+    position: absolute;
+    top: -20px;
+    margin-left: -105px;
+    z-index: 2;
+    filter: drop-shadow(0 0 3px rgba(255, 255, 0, 0.7));
+}
+
+/* Ajuste para o container do booster */
+.booster-circle {
+    position: relative;
+}
+
+/* Tela de início de jogo */
+.start-content {
+    text-align: center;
+    width: 100%;
+}
+
+.balance-container {
+    margin: 20px 0;
+}
+
+.bet-container {
+    margin-bottom: 20px;
+}
+
+.bet-options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.bet-option {
+    padding: 10px 15px;
+    background-color: #333;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.bet-option:hover {
+    background-color: #444;
+}
+
+.bet-option.selected {
+    background-color: #000000;
+}
+
+#play-button {
+    padding: 12px 30px;
+    font-size: 18px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#play-button:disabled {
+    background-color: #666;
+    cursor: not-allowed;
+    z-index: +1;
+}
+
+/* Tela de contagem regressiva */
+.countdown-content {
+    text-align: center;
+}
+
+.booster-display {
+    margin: 20px 0;
+}
+
+.booster-value {
+    font-size: 48px;
+    font-weight: bold;
+    margin-top: 10px;
+    animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+.countdown {
+    font-size: 72px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* Classe especial para a mensagem grande na tela de contagem regressiva */
+.countdown-message {
+    font-size: 48px; /*!important; */
+    text-align: center;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    animation: fadeInUp 0.5s ease-out;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: bold;
+    line-height: 1.2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tela de jogo */
+.game-content {
+    width: 100%;
+    height: 100%;
+}
+
+.game-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+}
+
+.phase-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.booster-indicator {
+    align-items: center;
+    padding: 5px 10px;
+    margin-left: -150px;
+    border-radius: 5px;
+    font-family: 'Chau Philomene One', sans-serif;
+    font-weight: bold;
+}
+
+.current-value {
+    font-size: 16px;
+    font-weight: bold;
+    color: #4CAF50;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.timer {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#dial-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    min-height: 400px;
+}
+
+#selected-value-display {
+    font-size: 42px;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #FFD700; /* Cor dourada para destacar o valor selecionado */
+}
+
+#dial-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+#dial-controls button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#dial-controls button:hover {
+    background-color: #45a049;
+}
+
+.player-balance {
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #fff;
+    position: relative;
+}
+
+#game-balance-display {
+    color: #4CAF50;
+    font-size: 20px; /* Aumentar tamanho do valor do saldo */
+}
+
+/* Estilo para o saldo do jogador na tela de jogo */
+#player-balance-display {
+    margin-top: 15px;
+    background-color: white;
+    color: #333;
+    cursor: default;
+    pointer-events: none;
+    font-family: 'Chau Philomene One', sans-serif;
+    border: 2px solid #333;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 1rem;
+    position: relative;
+    transition: transform 0.2s;
+    margin: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.game-circles {
+    grid-column: 3;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Tela de transição de fase */
+.phase-transition-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    height: 90%;
+    max-height: 600px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    position: relative;
+    border: 2px solid #000;
+}
+
+#phase-transition-title {
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 40px;
+    color: #000;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+.phase-transition-box {
+    width: 80%;
+    border: 2px solid #000;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: white;
+}
+
+.message-box {
+    padding: 20px 10px;
+    margin: 15px 0;
+}
+
+#phase-transition-phase {
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+}
+
+#phase-transition-text {
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 20px;
+    color: #000;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.phase-transition-image {
+    margin-top: 30px;
+    width: 60%;
+    max-width: 200px;
+}
+
+.phase-transition-image img {
+    width: 100%;
+    height: auto;
+}
+
+#phase-transition-screen {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Tela do Booster Explosivo */
+.explosive-booster-content {
+    text-align: center;
+    width: 100%;
+}
+
+.explosive-booster-info {
+    margin: 20px 0;
+    line-height: 1.6;
+}
+
+.explosive-booster-display {
+    margin: 30px 0;
+}
+
+.explosive-booster-value {
+    font-size: 72px;
+    font-weight: bold;
+    animation: explode 1.5s infinite alternate;
+}
+
+@keyframes explode {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.prize-info {
+    margin: 20px 0;
+    font-size: 18px;
+}
+
+.prize-info span {
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.explosive-booster-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    margin: 15px auto;
+}
+
+.explosive-button {
+    padding: 12px 24px;
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #2c3e50;
+    border: 2px solid #000;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    display: inline-block;
+    text-align: center;
+    min-width: 120px;
+}
+
+.explosive-button:hover {
+    background-color: #34495e;
+    transform: scale(1.05);
+}
+
+#stop-button {
+    background-color: #e74c3c;
+}
+
+#stop-button:hover {
+    background-color: #c0392b;
+}
+
+#continue-button {
+    background-color: #2ecc71;
+}
+
+#continue-button:hover {
+    background-color: #27ae60;
+}
+
+.explosive-button::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    opacity: 0.3;
+}
+
+/* Estilo para a mensagem do booster explosivo */
+.explosive-booster-message {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #FFD700;
+    text-align: center;
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: pulse 1.5s infinite;
+}
+
+/* Tela de resultado */
+.result-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+}
+
+#result-title {
+    font-size: 48px;
+    font-weight: bold;
+    color: #FFD700;
+    margin-bottom: 20px;
+}
+
+#result-message {
+    font-size: 20px;
+    padding: 15px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    margin: 10px 0;
+    min-height: 60px;
+    color: #000;
+    text-align: center;
+    font-weight: bold;
+    display: block !important;
+    background-color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 10;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.prize-value {
+    font-size: 36px;
+    font-weight: bold;
+    color: #FFD700;
+    margin: 20px 0;
+}
+
+/* Estilo para o botão Jogar Novamente */
+#play-again-button {
+    display: block;
+    margin: 30px auto;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #000;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+}
+
+#play-again-button:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+/* Ajuste para centralizar o conteúdo da tela de resultado */
+#result-screen .countdown-content > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Efeitos de tempo */
+.time-warning {
+    animation: pulseYellow 1s infinite;
+    position: relative;
+}
+
+.time-danger {
+    animation: pulseRed 0.7s infinite;
+    position: relative;
+}
+
+.time-warning::before,
+.time-danger::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 10px;
+}
+
+.time-warning::before {
+    background-color: rgba(255, 204, 0, 0.15);
+    animation: pulseYellowOverlay 1s infinite;
+}
+
+.time-danger::before {
+    background-color: rgba(255, 0, 0, 0.2);
+    animation: pulseRedOverlay 0.7s infinite;
+}
+
+/* Estilo específico para o timer quando estiver em alerta */
+.time-warning #timer {
+    color: #ff9900;
+    text-shadow: 0 0 10px rgba(255, 153, 0, 0.7);
+    animation: pulseTextYellow 1s infinite;
+}
+
+.time-danger #timer {
+    color: #ff0000;
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+    animation: pulseTextRed 0.7s infinite;
+    font-weight: bold;
+}
+
+@keyframes pulseTextYellow {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes pulseTextRed {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes pulseYellow {
+    0% {
+        box-shadow: 0 0 20px 0 rgba(255, 204, 0, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 40px 10px rgba(255, 204, 0, 0.8);
+    }
+    100% {
+        box-shadow: 0 0 20px 0 rgba(255, 204, 0, 0.5);
+    }
+}
+
+@keyframes pulseRed {
+    0% {
+        box-shadow: 0 0 30px 0 rgba(255, 0, 0, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 50px 15px rgba(255, 0, 0, 0.9);
+    }
+    100% {
+        box-shadow: 0 0 30px 0 rgba(255, 0, 0, 0.6);
+    }
+}
+
+@keyframes pulseYellowOverlay {
+    0% {
+        opacity: 0.1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 0.1;
+    }
+}
+
+@keyframes pulseRedOverlay {
+    0% {
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 0.4;
+    }
+    100% {
+        opacity: 0.2;
+    }
+}
+
+@keyframes pulseYellow {
+    0% { background: radial-gradient(circle, rgba(255,204,0,0.5) 30%, rgba(255,204,0,0) 80%); }
+    50% { background: radial-gradient(circle, rgba(255,204,0,0.8) 30%, rgba(255,204,0,0) 80%); }
+    100% { background: radial-gradient(circle, rgba(255,204,0,0.5) 30%, rgba(255,204,0,0) 80%); }
+}
+
+@keyframes pulseRed {
+    0% { background: radial-gradient(circle, rgba(255,0,0,0.5) 30%, rgba(255,0,0,0) 80%); }
+    50% { background: radial-gradient(circle, rgba(255,0,0,0.8) 30%, rgba(255,0,0,0) 80%); }
+    100% { background: radial-gradient(circle, rgba(255,0,0,0.5) 30%, rgba(255,0,0,0) 80%); }
+}
+
+.time-warning {
+    animation: pulseYellow 1s infinite;
+}
+
+.time-danger {
+    animation: pulseRed 0.7s infinite;
+}
+
+#countdown-number.warning {
+  color: #ffcc00;
+  text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
+  animation: pulseCountdownYellow 1s infinite;
+}
+
+#countdown-number.danger {
+  color: #ff0000;
+  text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+  animation: pulseCountdownRed 0.7s infinite;
+}
+
+@keyframes pulseCountdownYellow {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes pulseCountdownRed {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .game-container {
+        max-width: 600px;
+        max-height: 500px;
+    }
+    
+    .game-header {
+        padding: 10px;
+    }
+    
+    .phase-info {
+        gap: 5px;
+    }
+    
+    .booster-indicator {
+        padding: 5px;
+    }
+    
+    .timer {
+        font-size: 18px;
+    }
+    
+    #dial-container {
+        padding: 15px;
+    }
+    
+    #selected-value-display {
+        font-size: 24px;
+    }
+    
+    #dial-controls {
+        gap: 5px;
+    }
+    
+    #dial-controls button {
+        padding: 5px 10px;
+    }
+    
+    .explosive-booster-value {
+        font-size: 48px;
+    }
+    
+    .prize-info {
+        font-size: 14px;
+    }
+    
+    .explosive-booster-buttons {
+        gap: 10px;
+    }
+    
+    .explosive-button {
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-container {
+        max-width: 400px;
+        max-height: 350px;
+    }
+    
+    .game-header {
+        padding: 5px;
+    }
+    
+    .phase-info {
+        gap: 3px;
+    }
+    
+    .booster-indicator {
+        padding: 3px;
+    }
+    
+    .timer {
+        font-size: 14px;
+    }
+    
+    #dial-container {
+        padding: 10px;
+    }
+    
+    #selected-value-display {
+        font-size: 18px;
+    }
+    
+    #dial-controls {
+        gap: 3px;
+    }
+    
+    #dial-controls button {
+        padding: 3px 5px;
+    }
+    
+    .explosive-booster-value {
+        font-size: 36px;
+    }
+    
+    .prize-info {
+        font-size: 12px;
+    }
+    
+    .explosive-booster-buttons {
+        gap: 5px;
+    }
+    
+    .explosive-button {
+        padding: 5px 10px;
+    }
+}
+
+/* Estilos específicos que não estão em only-dial.css */
+
+/* Estilos para ícones específicos */
+.ray-icon {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    filter: drop-shadow(0 0 3px rgba(255, 255, 0, 0.7));
+}
+
+.time-icon {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+}
+
+.money-icon {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+}
+
+/* Estilos específicos para elementos do jogo */

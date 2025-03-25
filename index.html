@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cofre Explosivo</title>
+    <link rel="stylesheet" href="css/only-dial.css">
+    <link rel="stylesheet" href="css/layout-fixes.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chau+Philomene+One:ital@0;1&family=Englebert&family=Mouse+Memoirs&display=swap" rel="stylesheet">
+    <style>
+        /* Estilo específico para a barra de carregamento */
+        .progress-loader {
+            width: 200px; /* Largura similar aos botões do menu */
+            height: 4.8px;
+            display: inline-block;
+            position: relative;
+            background: rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        
+        .progress-loader::after {
+            content: '';  
+            box-sizing: border-box;
+            width: 0;
+            height: 4.8px;
+            background: #000000;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: animFw 10s linear infinite;
+        }
+        
+        .loading-progress {
+            height: 100%;
+            background: #FFF;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%; /* Será atualizado via JavaScript */
+            transition: width 0.3s ease;
+            z-index: 1;
+        }
+        
+        /* Container para centralizar a barra de loading e o texto */
+        .loading-center-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 30px 0;
+            width: 100%;
+        }
+        
+        @keyframes animFw {
+            0% {
+              width: 0;
+            }
+            100% {
+              width: 100%;
+            }
+        }
+        
+        .phase-transition-box {
+            background-color: #FFFFFF;
+            border: 1px solid #000000;
+        }
+        
+        .message-box {
+            padding: 7px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <!-- Tela de carregamento -->
+        <div id="loading-screen" class="screen">
+            <div class="loader-content">
+                <h1>Cofre Explosivo</h1>
+                <div class="loading-center-container">
+                    <div class="progress-loader">
+                        <div id="loading-progress" class="loading-progress"></div>
+                    </div>
+                    <h4>Carregando...</h4>
+                </div>
+                <div class="cofre-image-container">
+                    <img src="images/cofre_main.png" alt="Cofre" class="cofre-image">
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela de login (nova) -->
+        <div id="login-screen" class="screen hidden">
+            <div class="login-content">
+                <h1>Cofre Explosivo</h1>
+                <div class="login-message">
+                    <p>Acesso restrito</p>
+                    <p>Este jogo só pode ser acessado através de um link de convite válido.</p>
+                </div>
+                <div class="login-form">
+                    <p>Se você é o administrador, pode gerar novos links de convite:</p>
+                    <button id="admin-login-button" class="menu-button">Acesso Administrativo</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela de administração (nova) -->
+        <div id="admin-screen" class="screen hidden">
+            <div class="admin-content">
+                <h1>Painel Administrativo</h1>
+                <div class="admin-section">
+                    <h2>Gerar Novo Link de Convite</h2>
+                    <div class="admin-form">
+                        <input type="text" id="invite-label" placeholder="Nome do convidado" class="admin-input">
+                        <button id="generate-invite-button" class="admin-button">Gerar Link</button>
+                    </div>
+                    <div id="invite-result" class="invite-result hidden">
+                        <p>Link de convite gerado:</p>
+                        <div class="invite-url-container">
+                            <input type="text" id="invite-url" readonly class="invite-url">
+                            <button id="copy-invite-button" class="admin-button">Copiar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-section">
+                    <h2>Links de Convite Ativos</h2>
+                    <div id="active-tokens-list" class="active-tokens-list">
+                        <p>Carregando...</p>
+                    </div>
+                </div>
+                <button id="back-from-admin-button" class="menu-button">Voltar</button>
+            </div>
+        </div>
+
+        <!-- Menu principal -->
+        <div id="menu-screen" class="screen hidden">
+            <div class="menu-content">
+                <div>
+                    <h1>Cofre Explosivo</h1>
+                    <div class="menu-buttons">
+                        <button id="start-button" class="menu-button">Jogar</button>
+                        <button id="instructions-button" class="menu-button">Instruções</button>
+                        <button id="records-button" class="menu-button">Recordes</button>
+                    </div>
+                    <div>
+                        <div class="balance-container">
+                            <h2>Seu saldo: <span id="menu-balance-display">0.00</span></h2>
+                        </div>
+                    </div>                                                       
+                </div>
+                <div class="explosion-image-container">
+                    <img src="images/explosion.png" alt="Explosão" class="explosion-image">
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela de instruções -->
+        <div id="instructions-screen" class="screen hidden">
+            <div class="instructions-content">
+                <h1>Instruções</h1>
+                <div class="instructions-text">
+                    <p>Bem-vindo ao Cofre Explosivo! Neste jogo, você precisa encontrar o número correto em cada fase para abrir o cofre e ganhar prêmios.</p>
+                    <p>Como jogar:</p>
+                    <p>.:&nbsp;Escolha o valor da sua aposta;</p>
+                    <p>.:&nbsp;Gire o dial para encontrar o número correto em cada fase;</p>
+                    <p>.:&nbsp;Você terá um tempo limitado de 30 segundos;</p>
+                    <p>.:&nbsp;A cada fase, o jogo ficará mais difícil, mas os prêmios aumentam com os multiplicadores;</p>
+                    <p>.:&nbsp;Complete todas as fases para ganhar o prêmio;</p>
+                    <p>.:&nbsp;Após completar todas as fases, você terá a chance apostar o seu ganho em até 30x o valor com o Booster Explosivo.</p>
+                </div>
+                <div class="instructions-buttons">
+                    <button id="back-from-instructions-button">Voltar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela de recordes -->
+        <div id="records-screen" class="screen hidden">
+            <div class="records-content">
+                <h1>Recordes</h1>
+                <ul id="records-list" class="records-list">
+                    <!-- Recordes serão adicionados dinamicamente -->
+                </ul>
+                <div class="records-buttons">
+                    <button id="back-from-records-button">Voltar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela de início de jogo -->
+        <div id="start-game-screen" class="screen hidden">
+            <div class="start-content">
+                <div>
+                    <h1>Cofre Explosivo</h1>
+                    <div class="balance-container">
+                        <h2>Seu saldo: <span id="start-game-balance-display">0.00</span></h2>
+                    </div>
+                    <div class="bet-container">
+                        <h2>Escolha sua aposta:</h2>
+                        <div id="bet-options" class="bet-options">
+                            <!-- Opções de aposta serão adicionadas dinamicamente -->
+                        </div>
+                    </div>
+                    <button id="play-button" disabled>JOGAR</button>
+                </div>
+                <div class="money-image-container">
+                    <img src="images/money_ini.png" alt="Cofre" class="money-image">
+                </div>                                
+            </div>
+        </div>
+
+        <!-- Tela de contagem regressiva -->
+        <div id="countdown-screen" class="screen hidden">
+            <div class="countdown-content">
+                <div>
+                    <h1>Prepare-se!</h1>
+                    <div class="phase-info">
+                        <h2>Fase&nbsp;<span id="countdown-phase">1</span></h2>
+                    </div>
+                    <div id="countdown-message" class="message"></div>
+                </div>
+                <div class="phone-image-container">
+                    <img src="images/phone_cont_regre.png" alt="Explosão" class="phone-image">
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela de jogo -->
+        <div id="game-screen" class="screen hidden">
+            <div class="game-content">
+                <div class="game-header">
+                    <div class="phase-info">
+                        <h2>Fase&nbsp;<span id="phase-number">1</span>
+                            <p>Gire o botão e escolha um número de&nbsp;<span id="phase-description"></span></h2>
+                    </div>
+                    <div class="game-circles">
+                        <div class="circle-container booster-circle">
+                            <img src="images/svg/ray.svg" alt="Ray" class="ray-icon">
+                            <div id="booster-indicator" class="circle-value">2X</div>
+                        </div>
+                        <div class="circle-container timer-circle">
+                            <img src="images/svg/time.svg" alt="Ray" class="time-icon">
+                            <div id="timer" class="circle-value">20</div>
+                        </div>
+                        <div class="circle-container prize-circle">
+                            <img src="images/svg/money.svg" alt="Ray" class="money-icon">
+                            <div id="current-value" class="circle-value">2.00</div>
+                        </div>
+                    </div>
+                    <div id="message-display" class="message-display"></div>
+                </div>
+                <div id="dial-container">
+                    <div id="rotary-dial-container">
+                        <div class="volume">
+                            <div class="volume__content">
+                                <div class="volume__control">
+                                    <input type="range" class="volume__dial" id="volume-dial" min="0" max="100" value="0">
+                                    <label for="volume-dial" class="volume__dial-label">Volume</label>
+                                    <div class="volume__dial-wrap"></div>
+                                    <!-- Dots will be added dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Segundo grupo (dial-controls) -->
+                </div>
+                <div id="result-message" class="result-message">
+                    <button id="confirm-value">Confirmar</button>
+                    <div>
+                        <button id="clear-value"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela de transição de fase -->
+        <div id="phase-transition-screen" class="screen hidden">
+            <div class="countdown-content">
+                <div>
+                    <h1 id="phase-transition-title">Muito bom!</h1>
+                    <div class="phase-info">
+                        <h2>Fase&nbsp;<span id="phase-transition-phase">1</span></h2>
+                    </div>
+                    <div id="phase-transition-text" class="message">Etapa concluída com sucesso!</div>
+                </div>
+                <div class="check-image-container">
+                    <img src="images/check_trans.png" alt="Fones de ouvido" class="check-image">
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela do Booster Explosivo -->
+        <div id="explosive-booster-screen" class="screen hidden">
+            <div class="countdown-content">
+                <div>
+                    <h1>Booster Explosivo!</h1>
+                    
+                    <div class="phase-transition-box">
+                        <div class="message-box">
+                            <p id="phase-transition-text">VOCÊ TEM CHANCE DE MULTIPLICAR SEU PRÊMIO!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="phase-transition-box">
+                        <div class="message-box">
+                            <p>Prêmio atual: <span id="current-prize">R$ 0.00</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="phase-transition-box">
+                        <div class="message-box">
+                            <p><span class="ray-icon"></span><span id="explosive-booster-value">10X</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="phase-transition-box">
+                        <div class="message-box">
+                            <p>Prêmio potencial: <span id="potential-prize">R$ 0.00</span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="message-box">
+                        <div class="button-container">
+                            <button id="stop-button" class="explosive-button">PARAR</button>
+                            <button id="continue-button" class="explosive-button">CONTINUAR</button>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+
+        <!-- Tela de resultado -->
+        <div id="result-screen" class="screen hidden">
+            <div class="countdown-content">
+                <div>
+                    <h1 id="result-title">PARABÉNS!</h1>
+                    <div class="phase-info">
+                        <h2>&nbsp;</h2>
+                    </div>
+                    <div id="result-message"></div>
+                    <div id="result-prize-container" class="prize-value">R$ <span id="result-prize">0.00</span></div>
+                    <button id="play-again-button">Jogar Novamente</button>
+                </div>
+                <div class="phone-image-container">
+                    <img src="images/phone_cont_regre.png" alt="Explosão" class="phone-image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/messages.js"></script>
+    <script src="js/audio-manager.js"></script>
+    <script src="js/game-state.js"></script>
+    <script src="js/game-ui.js"></script>
+    <script src="js/login-ui.js"></script>
+    <script src="js/volume-dial.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,294 @@
+/**
+ * Shadcn UI Inspired Styles
+ * Este arquivo contém estilos inspirados na biblioteca Shadcn UI
+ * Adaptado para uso com HTML/CSS/JS vanilla
+ */
+
+:root {
+  /* Cores base do Shadcn UI */
+  --background: 0 0% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 9%;
+  --secondary: 0 0% 14.9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 14.9%;
+  --muted-foreground: 0 0% 63.9%;
+  --accent: 0 0% 14.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 14.9%;
+  --input: 0 0% 14.9%;
+  --ring: 0 0% 83.1%;
+
+  /* Conversão para RGB para facilitar o uso */
+  --background-rgb: 10, 10, 10;
+  --foreground-rgb: 250, 250, 250;
+  --card-rgb: 10, 10, 10;
+  --card-foreground-rgb: 250, 250, 250;
+  --popover-rgb: 10, 10, 10;
+  --popover-foreground-rgb: 250, 250, 250;
+  --primary-rgb: 250, 250, 250;
+  --primary-foreground-rgb: 23, 23, 23;
+  --secondary-rgb: 38, 38, 38;
+  --secondary-foreground-rgb: 250, 250, 250;
+  --muted-rgb: 38, 38, 38;
+  --muted-foreground-rgb: 163, 163, 163;
+  --accent-rgb: 38, 38, 38;
+  --accent-foreground-rgb: 250, 250, 250;
+  --destructive-rgb: 127, 29, 29;
+  --destructive-foreground-rgb: 250, 250, 250;
+  --border-rgb: 38, 38, 38;
+  --input-rgb: 38, 38, 38;
+  --ring-rgb: 212, 212, 212;
+
+  /* Radius */
+  --radius: 0.5rem;
+}
+
+/* Base */
+body {
+  background-color: rgb(var(--background-rgb));
+  color: rgb(var(--foreground-rgb));
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Botões */
+.shadcn-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  height: 2.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.shadcn-button:focus-visible {
+  outline: 2px solid rgb(var(--ring-rgb));
+  outline-offset: 2px;
+}
+
+.shadcn-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Variantes de botões */
+.shadcn-button-primary {
+  background-color: rgb(var(--primary-rgb));
+  color: rgb(var(--primary-foreground-rgb));
+  border: 1px solid transparent;
+}
+
+.shadcn-button-primary:hover {
+  background-color: rgba(var(--primary-rgb), 0.9);
+}
+
+.shadcn-button-secondary {
+  background-color: rgb(var(--secondary-rgb));
+  color: rgb(var(--secondary-foreground-rgb));
+  border: 1px solid transparent;
+}
+
+.shadcn-button-secondary:hover {
+  background-color: rgba(var(--secondary-rgb), 0.8);
+}
+
+.shadcn-button-outline {
+  background-color: transparent;
+  color: rgb(var(--foreground-rgb));
+  border: 1px solid rgb(var(--border-rgb));
+}
+
+.shadcn-button-outline:hover {
+  background-color: rgb(var(--accent-rgb));
+  color: rgb(var(--accent-foreground-rgb));
+}
+
+.shadcn-button-ghost {
+  background-color: transparent;
+  color: rgb(var(--foreground-rgb));
+  border: 1px solid transparent;
+}
+
+.shadcn-button-ghost:hover {
+  background-color: rgb(var(--accent-rgb));
+  color: rgb(var(--accent-foreground-rgb));
+}
+
+.shadcn-button-destructive {
+  background-color: rgb(var(--destructive-rgb));
+  color: rgb(var(--destructive-foreground-rgb));
+  border: 1px solid transparent;
+}
+
+.shadcn-button-destructive:hover {
+  background-color: rgba(var(--destructive-rgb), 0.9);
+}
+
+/* Tamanhos de botões */
+.shadcn-button-sm {
+  height: 2rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  font-size: 0.75rem;
+}
+
+.shadcn-button-lg {
+  height: 3rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  font-size: 1rem;
+}
+
+/* Cards */
+.shadcn-card {
+  background-color: rgb(var(--card-rgb));
+  color: rgb(var(--card-foreground-rgb));
+  border-radius: var(--radius);
+  border: 1px solid rgb(var(--border-rgb));
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.shadcn-card-header {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  gap: 0.5rem;
+}
+
+.shadcn-card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.shadcn-card-description {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgb(var(--muted-foreground-rgb));
+}
+
+.shadcn-card-content {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+.shadcn-card-footer {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  border-top: 1px solid rgb(var(--border-rgb));
+}
+
+/* Inputs */
+.shadcn-input {
+  display: flex;
+  height: 2.5rem;
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid rgb(var(--input-rgb));
+  background-color: transparent;
+  padding: 0 0.75rem;
+  font-size: 0.875rem;
+  color: rgb(var(--foreground-rgb));
+}
+
+.shadcn-input:focus {
+  outline: none;
+  border-color: rgb(var(--ring-rgb));
+  box-shadow: 0 0 0 1px rgb(var(--ring-rgb));
+}
+
+.shadcn-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.shadcn-input::placeholder {
+  color: rgb(var(--muted-foreground-rgb));
+}
+
+/* Labels */
+.shadcn-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  color: rgb(var(--foreground-rgb));
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Select */
+.shadcn-select {
+  display: flex;
+  height: 2.5rem;
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid rgb(var(--input-rgb));
+  background-color: transparent;
+  padding: 0 0.75rem;
+  font-size: 0.875rem;
+  color: rgb(var(--foreground-rgb));
+}
+
+.shadcn-select:focus {
+  outline: none;
+  border-color: rgb(var(--ring-rgb));
+  box-shadow: 0 0 0 1px rgb(var(--ring-rgb));
+}
+
+/* Checkbox */
+.shadcn-checkbox {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid rgb(var(--border-rgb));
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.shadcn-checkbox:checked {
+  background-color: rgb(var(--primary-rgb));
+  border-color: rgb(var(--primary-rgb));
+}
+
+/* Utilitários */
+.shadcn-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Animações */
+@keyframes shadcn-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.shadcn-animate-spin {
+  animation: shadcn-spin 1s linear infinite;
+}

@@ -1,0 +1,68 @@
+/**
+ * Estilos mínimos para o dial rotativo
+ */
+
+/* Container do dial */
+#rotary-dial-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Dial principal */
+#rotary-dial {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 1px solid black;
+    margin: 0 auto;
+    touch-action: none;
+}
+
+/* Botão central do dial */
+#dial-knob {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border: 1px solid black;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 2;
+}
+
+/* Indicador de posição */
+#dial-indicator {
+    width: 5px;
+    height: 30px;
+    background-color: black;
+    transform-origin: bottom center;
+}
+
+/* Marcadores do dial */
+#dial-markers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Rótulos dos números */
+.dial-label {
+    position: absolute;
+    font-size: 1rem;
+    color: black;
+}
+
+/* Telas */
+.screen {
+    display: block;
+}
+
+.screen.hidden {
+    display: none;
+}

@@ -1,0 +1,1105 @@
+/**
+ * Estilos mínimos para o jogo Cofre Explosivo
+ * Mantém apenas os estilos relacionados ao dial
+ */
+
+/* Estilos globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f8f8f8;
+    line-height: 1.6;
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Classe para esconder elementos */
+.hidden {
+    display: none !important;
+}
+
+.screen.hidden {
+    display: none !important;
+}
+
+/* Estilos básicos para o funcionamento do jogo */
+.game-container {
+    width: 400px;
+    max-width: 400px;
+    height: 100%;
+    max-height: 600px;
+    position: relative;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.screen {
+    width: 400px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transition: opacity 0.3s ease;
+}
+
+/* Tela de carregamento */
+#loading-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f8f8;
+    z-index: 1000;
+}
+
+.loader {
+    text-align: center;
+    padding: 20px;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #ddd;
+    border-top: 5px solid #333;
+    border-radius: 50%;
+    margin: 20px auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Estilos para títulos e textos */
+h1, h2, h3 {
+    font-family: 'Mouse Memoirs', sans-serif;
+    position: relative;
+    text-align: center;
+}
+
+h1 {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 25%;
+    width: 50%;
+    height: 2px;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,5 C20,2 30,8 50,5 C70,2 80,8 100,5' stroke='%23333' fill='none' stroke-width='2'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+}
+
+h4 {
+    font-family: 'Chau Philomene One', sans-serif;
+    margin-bottom: 15px;
+    position: relative;
+    text-align: center;
+    background-color: white;
+    padding: 20px 16px;
+    font-size: 1rem;
+    position: relative;
+    transition: transform 0.2s;
+    margin: 5px;
+    color: #333;
+}
+
+h5 {
+    font-family: sans-serif;
+    position: relative;
+    text-align: justify;
+    background-color: white;
+    font-size: 12px;
+    line-height: 2;
+    font-weight: 10; /* quanto menor, mais fina */
+    position: relative;
+    color: #333;
+}
+
+/* Estilos para botões */
+button {
+    font-family: 'Chau Philomene One', sans-serif;
+    text-transform: uppercase;
+    background-color: white;
+    border: 2px solid #333;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 1rem;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s;
+    margin: 5px;
+    color: #333;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    opacity: 0.3;
+}
+
+input[type="text"], 
+input[type="number"] {
+    font-family: 'Chau Philomene One', sans-serif;
+    border: 2px solid #333;
+    border-radius: 5px;
+    padding: 8px;
+    background-color: #fff;
+}
+
+ul, ol {
+    margin-left: 20px;
+}
+
+li {
+    position: relative;
+    margin-bottom: 10px;
+    list-style-type: none;
+}
+
+li::before {
+    content: '✓';
+    position: absolute;
+    left: -20px;
+}
+
+.balance-container, 
+.bet-container {
+    /* Estrutura e visual */
+    border: none;
+    border-radius: 10px;
+    background-color: transparent;
+    width: 300px;
+    max-width: 300px;
+    margin: 20px auto;
+
+    /* Centralização de conteúdo interno */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    /* Camada relativa para ::after */
+    position: relative;
+}
+
+.balance-container::after, 
+.bet-container::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #333;
+    border-radius: 10px;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+.start-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* Estilo para os botões de aposta organizados em duas linhas com 3 itens cada */
+.bet-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 10px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.bet-option {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.bet-option:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+}
+
+.bet-option.selected {
+    background-color: #333;
+    color: #fff;
+    transform: scale(1.05);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+#play-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 30px;
+    font-size: 1.2rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 200px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#play-button:hover {
+    background-color: #45a049;
+}
+
+#play-button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+/* Estilo para o contador de fase */
+.phase-counter {
+    font-family: 'Mouse Memoirs', sans-serif;
+    font-size: 1.4rem;
+    text-align: center;
+    margin: 10px 0;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+/* Estilo para os dígitos selecionados */
+.selected-digits {
+    font-family: 'Mouse Memoirs', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 5px;
+    text-align: center;
+    margin: 15px 0;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px dashed #333;
+    border-radius: 5px;
+}
+
+/* Estilo para o cofre */
+.safe-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 20px auto;
+    border: 3px solid #333;
+    border-radius: 10px;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.safe-container::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #333;
+    background-color: #fff;
+}
+
+.safe-door {
+    width: 80%;
+    height: 80%;
+    background-color: #ccc;
+    border: 2px solid #333;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/**
+ * Estilos para o dial de volume
+ * NÃO MODIFICAR ESTA SEÇÃO
+ */
+
+/**
+ * Estilos para o dial de volume
+ */
+
+:root {
+	--hue: 223;
+	--sat: 10%;
+	--white: hsl(0,0%,100%);
+	--light-gray1: hsl(var(--hue),var(--sat),95%);
+	--light-gray2: hsl(var(--hue),var(--sat),90%);
+	--light-gray3: hsl(var(--hue),var(--sat),85%);
+	--light-gray4: hsl(var(--hue),var(--sat),80%);
+	--dark-gray4: hsl(var(--hue),var(--sat),30%);
+	--dark-gray5: hsl(var(--hue),var(--sat),25%);
+	--dark-gray6: hsl(var(--hue),var(--sat),20%);
+	--dark-gray7: hsl(var(--hue),var(--sat),15%);
+	--dark-gray8: hsl(var(--hue),var(--sat),10%);
+	--green: hsl(150,90%,40%);
+	--blue: hsl(210,90%,40%);
+}
+
+/* Volume Dial Container */
+#rotary-dial-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Volume Dial */
+.volume {
+    --dot-color: var(--green);
+}
+
+.volume__content {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.volume__control {
+    position: relative;
+    width: 230px;
+    height: 230px;
+}
+
+.volume__dial,
+.volume__dial:before,
+.volume__dial-wrap {
+    border-radius: 100%;
+    position: absolute;
+}
+
+.volume__dial {
+    background-color: transparent;
+    cursor: grab;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    z-index: 10;
+}
+
+.volume__dial:before {
+    background-color: var(--dot-color);
+    content: "";
+    display: block;
+    top: 12%;
+    left: 46.5%;
+    width: 7%;
+    height: 7%;
+}
+
+.volume__dial-label {
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+}
+
+.volume__dial-wrap {
+    background-clip: padding-box, border-box;
+    background-image: 
+        radial-gradient(
+            100% 100% at center,
+            var(--light-gray1) 43%,
+            transparent 45%
+        ),
+        linear-gradient(
+            var(--white),
+            var(--light-gray2)
+        );
+    background-origin: border-box;
+    border: 0.25em solid transparent;
+    box-shadow: 0 0.5em 1em hsla(0,0%,0%,0.4);
+    inset: 12.5%;
+    width: 75%;
+    height: 75%;
+}
+
+.volume__dot {
+    position: absolute;
+    top: 0;
+    left: 49%;
+    width: 2%;
+    height: 50%;
+    transform-origin: 50% 100%;
+}
+
+.volume__dot:before {
+    aspect-ratio: 1;
+    background-color: var(--light-gray3);
+    border-radius: 50%;
+    content: "";
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: background-color 0.15s;
+}
+
+.volume__dot--filled:before {
+    background-color: var(--dot-color);
+}
+
+/* Phase Colors */
+.volume--phase1 {
+    --dot-color: var(--green);
+}
+
+.volume--phase2 {
+    --dot-color: var(--green);
+}
+
+.volume--phase3 {
+    --dot-color: var(--green);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .volume__dial-wrap {
+        background-image: 
+            radial-gradient(
+                100% 100% at center,
+                var(--dark-gray6) 43%,
+                transparent 45%
+            ),
+            linear-gradient(
+                var(--dark-gray5),
+                var(--dark-gray7)
+            );
+        box-shadow: 0 0.5em 1em hsla(0,0%,0%,0.8);
+    }
+    
+    .volume__dot:before {
+        background-color: var(--dark-gray4);
+    }
+}
+
+/* Sobrescrever estilos de botões para os botões do dial */
+#rotary-dial-container button,
+.dial-controls button,
+.dial-button,
+#confirm-button,
+#confirm-value,
+#clear-value {
+    background-image: none;
+    text-shadow: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+}
+
+#rotary-dial-container button::before,
+.dial-controls button::before,
+.dial-button::before,
+#confirm-button::before,
+#confirm-value::before,
+#clear-value::before {
+    display: none;
+}
+
+#rotary-dial-container button:hover,
+.dial-controls button:hover,
+.dial-button:hover,
+#confirm-button:hover,
+#confirm-value:hover,
+#clear-value:hover {
+    transform: none;
+}
+
+/* Estilo para o botão confirmar */
+#confirm-value {
+    padding: 13px 50px;
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 18px;
+    background-color:#ffffff;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+    position: relative;
+    text-transform: uppercase;
+    margin-top: 20px;
+}
+
+#confirm-value:hover:not(:disabled) {
+    transform: scale(1.05);
+}
+
+#confirm-value::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    opacity: 0.3;
+}
+
+#confirm-value:disabled {
+    background-color: #888;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+#clear-value {
+    display: none;
+}
+
+/* Estilo para o container do dial */
+#dial-controls {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+/* Estilo para os círculos de informação do jogo */
+.game-circles {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin: 15px auto;
+    width: 100%;
+    max-width: 360px;
+    padding: 0 10px;
+}
+
+.circle-container {
+    position: relative;
+    width: 90px;
+    height: 42px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 0 5px;
+    margin: 0;
+}
+
+/* Removendo os círculos menores do topo e da base */
+.circle-container::before,
+.circle-container::after {
+    display: none;
+}
+
+.circle-container .circle-value,
+.booster-circle .circle-value,
+.timer-circle .circle-value,
+.prize-circle .circle-value {
+    font-family: 'Chau Philomene One', sans-serif !important;
+    font-size: 21px !important;
+    font-weight: bold !important;
+    text-align: right !important;
+    margin-left: auto !important;
+    color: rgb(0, 0, 0) !important;
+    line-height: 1 !important;
+}
+
+
+.timer-circle {
+    animation: none;
+}
+
+.prize-circle .circle-value {
+    color: #2ECC71 !important;
+}
+
+.circle-value,
+input,
+input:focus,
+input:active,
+button:focus,
+button:active {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Ajustes para a fase atual */
+.phase-info {
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 9.5px;
+    font-weight: 1; /* quanto menor, mais fina */
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.phase-info h2 {
+    font-family: 'Chau Philomene One', sans-serif;
+    position: relative;
+    width: 95%;
+    background-color: #ffffff;
+    color: #333;
+    border: 2px solid #000;
+    border-radius: 5px;
+ 
+}
+
+.phase-info h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+}
+
+/* Estilo para mensagens */
+.message {
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #fff;
+    position: relative;
+}
+
+.message::before,
+.message::after {
+    content: '"';
+    font-size: 1.5em;
+    line-height: 0.1em;
+    vertical-align: -0.3em;
+}
+
+/* Estilos adicionais para o visual de rabiscos */
+.loader-content,
+.countdown-content,
+.phase-transition-content,
+.explosive-booster-content,
+.menu-content,
+.instructions-content,
+.records-content,
+.start-content,
+.game-content,
+.result-content {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 15px;
+    position: relative;
+}
+
+/* Removidos os seletores que criavam os círculos decorativos */
+/*
+.loader::before,
+.countdown-content::before,
+.phase-transition-content::before,
+.explosive-booster-content::before,
+.menu-content::before,
+.instructions-content::before,
+.records-content::before,
+.start-content::before,
+.game-content::before,
+.result-content::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 50%;
+}
+
+.loader::after,
+.countdown-content::after,
+.phase-transition-content::after,
+.explosive-booster-content::after,
+.menu-content::after,
+.instructions-content::after,
+.records-content::after,
+.start-content::after,
+.game-content::after,
+.result-content::after {
+    content: '';
+    top: -10px;
+    left: 50px;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 50%;
+}
+*/
+
+.menu-button {
+    display: block;
+    width: 200px;
+    margin: 10px auto;
+    text-align: center;
+}
+
+/* Estilo para os botões de aposta organizados em duas linhas com 3 itens cada */
+.bet-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 10px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.bet-option {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.bet-option:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+}
+
+.bet-option.selected {
+    background-color: #333;
+    color: #fff;
+    transform: scale(1.05);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+#play-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 30px;
+    font-size: 1.2rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 200px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#play-button:hover {
+    background-color: #45a049;
+}
+
+#play-button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+/* Estilos para a tela de apostas */
+#start-game-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.start-content {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.start-content::before {
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 50%;
+}
+
+.start-content::after {
+    position: absolute;
+    top: -10px;
+    left: 50px;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 50%;
+}
+
+.start-content h1 {
+    font-family: 'Mouse Memoirs', sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.balance-container, 
+.bet-container {
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #fff;
+    position: relative;
+}
+
+.balance-container h2, 
+.bet-container h2 {
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 1.2rem;
+    margin: 0 0 10px 0;
+    text-align: center;
+}
+
+.bet-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+    width: 100%;
+}
+
+.bet-option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.bet-option:hover {
+    background-color: #f5f5f5;
+    transform: scale(1.05);
+}
+
+.bet-option.selected {
+    background-color: #333;
+    color: #fff;
+}
+
+#play-button {
+    margin-top: 20px;
+    padding: 10px 30px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-transform: uppercase;
+}
+
+#play-button:hover {
+    background-color: #45a049;
+}
+
+#play-button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+/* Estilo para o valor no círculo */
+.circle-value {
+    font-size: 24px;
+    font-weight: bold !important;
+    text-align: right !important;
+    margin-left: auto !important;
+    color: rgb(196, 17, 17) !important;
+    line-height: 1 !important;
+}
+
+/* Estilo para o container de saldo */
+.balance-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px auto;
+    width: 100%;
+    max-width: 360px;
+    padding: 0 10px;
+    border: none;
+}
+
+.balance-container h2 {
+    position: relative;
+    width: 100%;
+    height: 42px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 0 5px;
+    margin: 0;
+    font-size: 18px;
+    font-family: 'Chau Philomene One', sans-serif;
+}
+
+.balance-container h2 span {
+    color: #4CAF50;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+/* Estilo específico para o cabeçalho de saldo */
+.balance-heading {
+    position: relative;
+    width: 200px;
+    max-width: 200px;
+    height: 42px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 0 5px;
+    margin: 0;
+    font-size: 18px;
+    font-family: 'Chau Philomene One', sans-serif;
+}
+
+.balance-heading span {
+    color: #4CAF50;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+/* Removendo estilos duplicados */
+.balance-container h2 {
+    border: none;
+    background: none;
+}
+
+/* Estilo específico para o saldo no menu principal */
+.menu-balance {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.menu-balance .balance-heading {
+    width: 100%;
+    padding: 12px 30px;
+    font-size: 18px;
+    background-color: #ffffff;
+    color: #333;
+    border: 2px solid #000;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+/* Mantendo o estilo para #selected-value-display separado para permitir que a classe neutral-value funcione */
+#selected-value-display {
+    padding: 3px 20px;
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 15px;
+    background-color:#ffffff;
+    color: #000;
+    size-adjust: fixed;
+    border: 2px solid #000;
+    border-radius: 4px;
+    transition: transform 0.2s, background-color 0.3s;
+    position: relative;
+    margin-top: 1px;
+}

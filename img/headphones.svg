@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200px" height="200px" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(20, 40)">
+            <!-- Arco dos fones -->
+            <path d="M20,60 C20,30 40,10 80,10 C120,10 140,30 140,60" stroke="#000000" stroke-width="8" stroke-linecap="round"/>
+            
+            <!-- Linhas de movimento -->
+            <path d="M10,60 C10,30 35,5 80,5 C125,5 150,30 150,60" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-dasharray="5,5"/>
+            <path d="M30,60 C30,35 45,15 80,15 C115,15 130,35 130,60" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-dasharray="5,5"/>
+            
+            <!-- Fone esquerdo -->
+            <g transform="translate(5, 60)">
+                <ellipse cx="15" cy="20" rx="20" ry="30" fill="#000000"/>
+                <ellipse cx="15" cy="20" rx="15" ry="25" fill="#FFFFFF"/>
+                <ellipse cx="15" cy="20" rx="10" ry="15" fill="#000000"/>
+            </g>
+            
+            <!-- Fone direito -->
+            <g transform="translate(140, 60)">
+                <ellipse cx="15" cy="20" rx="20" ry="30" fill="#000000"/>
+                <ellipse cx="15" cy="20" rx="15" ry="25" fill="#FFFFFF"/>
+                <ellipse cx="15" cy="20" rx="10" ry="15" fill="#000000"/>
+            </g>
+        </g>
+    </g>
+</svg>
